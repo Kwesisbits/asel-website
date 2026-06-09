@@ -5,9 +5,13 @@ import { Button } from "../ui/Button";
 export function Footer() {
   return (
     <footer className="bg-asel-navy text-white">
-      <div className="container-shell grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+      <div className="container-shell grid gap-10 py-14 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
         <div>
-          <img src="/logo.jpg" alt="ASEL Africa logo" className="h-16 w-16 rounded-full bg-white object-contain p-1" />
+          <img
+            src="/logo.png"
+            alt="ASEL Africa logo"
+            className="h-20 w-auto"
+          />
           <p className="mt-4 max-w-sm text-white/75">Powering Africa's energy future, one skilled practitioner at a time.</p>
           <div className="mt-5 flex gap-3">
             {[Globe2, UsersRound, Mail].map((Icon, index) => (

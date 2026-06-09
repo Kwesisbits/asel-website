@@ -1,8 +1,23 @@
-import { Globe2, Lightbulb, Target, UsersRound } from "lucide-react";
+import { useState } from "react";
+import { Globe2, Lightbulb, PlusCircle, Target, UsersRound } from "lucide-react";
+import { team, type TeamMember } from "../data/team";
+import { TeamMemberDrawer } from "../components/layout/TeamMemberDrawer";
 
 const values = ["Impact-driven", "Inclusion & equity", "Excellence", "Innovation", "Collaboration", "Sustainability"];
 
 export function AboutUs() {
+  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  function openMember(member: TeamMember) {
+    setSelectedMember(member);
+    setIsDrawerOpen(true);
+  }
+
+  function closeMember() {
+    setIsDrawerOpen(false);
+  }
+
   return (
     <main className="pt-20">
       <section className="solar-mesh py-24 text-white">
@@ -53,23 +68,45 @@ export function AboutUs() {
           </div>
         </div>
       </section>
-      <section className="bg-asel-off-white py-20">
+      <section id="meet-the-team" className="bg-asel-off-white py-20">
         <div className="container-shell">
-          <h2 className="font-display text-4xl font-extrabold">Meet the Team</h2>
+          <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-asel-orange">The People</p>
+          <h2 className="mt-3 font-display text-4xl font-extrabold">Meet the Team</h2>
+          <p className="mt-4 max-w-2xl text-asel-mid-gray">The professionals driving ASEL Africa's mission of inclusive, practical sustainable energy education.</p>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {[1, 2, 3, 4].map((member) => (
-              <article key={member} className="rounded-lg bg-white p-6 text-center shadow-sm">
-                <div className="mx-auto grid h-24 w-24 place-items-center rounded-full bg-asel-yellow/20 font-display text-2xl font-bold text-asel-navy">TBA</div>
-                <h3 className="mt-4 font-display text-lg font-bold">Team member TBA</h3>
-                <p className="text-sm text-asel-mid-gray">Leadership role</p>
+            {team.map((member) => (
+              <article key={member.id} className="relative rounded-lg bg-white p-6 pb-14 text-center shadow-sm transition hover:shadow-md">
+                {member.photo ? (
+                  <img
+                    src={member.photo}
+                    alt={member.name}
+                    className="mx-auto h-24 w-24 rounded-full object-cover"
+                    style={{ objectPosition: member.photoPosition ?? "center" }}
+                  />
+                ) : (
+                  <div className="mx-auto grid h-24 w-24 place-items-center rounded-full bg-asel-yellow/20 font-display text-2xl font-bold text-asel-navy">
+                    {member.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase()}
+                  </div>
+                )}
+                <h3 className="mt-4 font-display text-lg font-bold">{member.name}</h3>
+                <p className="mt-1 text-sm text-asel-mid-gray">{member.title}</p>
+                <button
+                  onClick={() => openMember(member)}
+                  aria-label={`View ${member.name}'s profile`}
+                  className="absolute bottom-4 right-4 text-asel-yellow transition hover:text-asel-orange hover:scale-110"
+                >
+                  <PlusCircle size={22} />
+                </button>
               </article>
             ))}
           </div>
           <blockquote className="mt-12 border-l-4 border-asel-yellow bg-white p-8 font-display text-2xl font-bold leading-relaxed">
-            “ASEL Africa is positioning itself to become a leading platform for sustainable energy workforce transformation across Africa.”
+            "ASEL Africa is positioning itself to become a leading platform for sustainable energy workforce transformation across Africa."
           </blockquote>
         </div>
       </section>
+
+      <TeamMemberDrawer member={selectedMember} isOpen={isDrawerOpen} onClose={closeMember} />
     </main>
   );
 }
