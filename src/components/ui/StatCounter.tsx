@@ -26,7 +26,7 @@ export function StatCounter({ value, label, prefix = "", suffix = "" }: StatCoun
 
   return (
     <div ref={ref} className="text-center">
-      <div className="font-display text-3xl font-extrabold md:text-4xl">
+      <div className="font-display text-4xl font-extrabold md:text-5xl">
         {prefix}
         {count}
         {suffix}

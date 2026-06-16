@@ -9,8 +9,8 @@ const stats = [
 
 export function ImpactStats() {
   return (
-    <section className="bg-asel-yellow py-10 text-asel-navy">
-      <div className="container-shell grid grid-cols-2 gap-8 md:grid-cols-4">
+    <section className="bg-asel-yellow py-14 text-asel-navy">
+      <div className="container-shell grid grid-cols-2 gap-10 md:grid-cols-4">
         {stats.map((s) => (
           <div key={s.label} className="text-center">
             <StatCounter value={s.value} label={s.label} suffix={s.suffix} />

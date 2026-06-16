@@ -1,47 +1,49 @@
-import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
-import { programs } from "../data/programs";
 import { Hero } from "../components/sections/Hero";
 import { ImpactStats } from "../components/sections/ImpactStats";
+import { MissionSection } from "../components/sections/MissionSection";
 import { ProgramsOverview } from "../components/sections/ProgramsOverview";
-import { WhyASEL } from "../components/sections/WhyASEL";
-import { PartnersStrip } from "../components/sections/PartnersStrip";
+import { ProgramsTeaser } from "../components/sections/ProgramsTeaser";
+import { PhotoFeature } from "../components/sections/PhotoFeature";
 import { ArticlesSection } from "../components/sections/ArticlesSection";
-import { ProgramCard } from "../components/ui/ProgramCard";
+import { PartnersStrip } from "../components/sections/PartnersStrip";
 
 interface HomeProps {
   onEnroll: (program?: string) => void;
   onPartnerClick: () => void;
 }
 
-export function Home({ onEnroll, onPartnerClick }: HomeProps) {
+export function Home({ onEnroll: _onEnroll, onPartnerClick }: HomeProps) {
   return (
     <>
-      <Hero onEnroll={onEnroll} />
+      <Hero onEnroll={_onEnroll} />
       <ImpactStats />
+      <MissionSection />
       <ProgramsOverview />
-      <section className="bg-asel-off-white py-20">
-        <div className="container-shell">
-          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
-            <div>
-              <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-asel-orange">Featured programs</p>
-              <h2 className="mt-3 font-display text-3xl font-extrabold md:text-5xl">Start with a practical cohort.</h2>
-            </div>
-            <Link
-              to="/programs"
-              className="inline-flex items-center gap-2 rounded-full bg-asel-navy px-5 py-3 text-sm font-bold text-white transition hover:bg-asel-navy/80"
-            >
-              See All Programs <ArrowRight size={16} />
-            </Link>
-          </div>
-          <div className="no-scrollbar mt-10 grid auto-cols-[minmax(280px,1fr)] grid-flow-col gap-6 overflow-x-auto pb-4 lg:grid-flow-row lg:grid-cols-3 lg:overflow-visible">
-            {programs.slice(0, 3).map((program) => (
-              <ProgramCard key={program.id} {...program} browseOnly onEnroll={() => onEnroll(program.title)} />
-            ))}
-          </div>
-        </div>
-      </section>
-      <WhyASEL />
+      <ProgramsTeaser />
+      <PhotoFeature
+        image="/Image of Training.jpeg"
+        alt="ASEL Africa trainees working hands-on with renewable energy equipment"
+        badge="Partnership"
+        headline="Training the Next Generation of Energy Practitioners"
+        body="ASEL Africa partnered with Dream Renewables to connect young professionals with hands-on, practical renewable energy training in the field — bridging classroom knowledge with real deployment experience."
+        imageLeft={true}
+        dark={false}
+        cta={{ label: "Explore Programs", href: "/programs" }}
+      />
+      <PhotoFeature
+        image="/CEO Award.PNG"
+        alt="ASEL Africa Team Lead Emmanuella B. receiving TUM SEED Center award"
+        badge="Recognition"
+        headline="TUM SEED Center Award for Women in Renewable Energy"
+        body="On International Day of the Girl Child, our Team Lead Emmanuella B. received recognition from the TUM SEED Center for ASEL's work in advancing renewable energy training for women and girls in Ghana."
+        imageLeft={false}
+        dark={true}
+        cta={{
+          label: "Read the Full Story",
+          href: "https://www.linkedin.com/posts/empower-power-international-share-7382798793022550016-l6Js/?utm_source=share&utm_medium=member_ios&rcm=ACoAADMq4OEBpMzB7-pznNczL5IG1Xnl9WuspU0",
+          external: true,
+        }}
+      />
       <ArticlesSection />
       <PartnersStrip onPartnerClick={onPartnerClick} />
     </>
