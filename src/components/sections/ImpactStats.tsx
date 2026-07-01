@@ -1,7 +1,7 @@
 import { StatCounter } from "../ui/StatCounter";
 
 const stats = [
-  { value: 500, label: "Practitioners trained", suffix: "+" },
+  { value: 200, label: "Practitioners trained", suffix: "+" },
   { value: 4, label: "Program tracks" },
   { value: 3, label: "Countries reached" },
   { value: 60, label: "Women enrolled", suffix: "%" },

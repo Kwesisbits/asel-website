@@ -57,7 +57,7 @@ export function Navbar({ onPartnerClick }: NavbarProps) {
             items={[
               ["Our Story", "/about"],
               ["Meet the Team", "/about#meet-the-team"],
-              ["Core Values", "/about"],
+              ["Core Values", "/about#core-values"],
             ]}
           />
           <NavLink to="/contact" className={navLink}>Contact Us</NavLink>
@@ -83,6 +83,7 @@ export function Navbar({ onPartnerClick }: NavbarProps) {
             ["Our Programs", "/programs"],
             ["About Us", "/about"],
             ["Meet the Team", "/about#meet-the-team"],
+            ["Core Values", "/about#core-values"],
             ["Contact Us", "/contact"],
           ].map(([label, href]) => (
             <Link

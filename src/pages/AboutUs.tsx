@@ -53,7 +53,7 @@ export function AboutUs() {
           </article>
         </div>
       </section>
-      <section className="bg-white py-20">
+      <section id="core-values" className="bg-white py-20">
         <div className="container-shell">
           <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-asel-orange">Core values</p>
           <h2 className="mt-3 font-display text-4xl font-extrabold">Values that guide partnerships and learning.</h2>

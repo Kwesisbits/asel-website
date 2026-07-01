@@ -99,7 +99,6 @@ export const programs: Program[] = [
     summary: "Turn technical ideas into resilient, customer-centered ventures.",
     learningPoints: ["Market discovery", "Business model design", "Pitch and partnership readiness"],
     targetAudience: "Founders, innovators, student teams",
-    isComingSoon: true,
   },
   {
     id: "policy-market-design",

@@ -1,94 +1,85 @@
-import { ArrowRight, Clock3, GraduationCap, MapPin, Sparkles } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowRight, Clock3, MapPin } from "lucide-react";
 import type { Program } from "../../types";
 
 interface ProgramCardProps extends Program {
-  /** Opens the enroll modal */
-  onEnroll: () => void;
-  /** When true the primary CTA links to /programs instead of opening the modal */
-  browseOnly?: boolean;
+  onOpenDetail: (program: Program) => void;
 }
 
-const trackLabel = {
-  technical: "Technical",
-  digital: "Digital Skills",
-  career: "Career Growth",
+const trackConfig: Record<
+  string,
+  { label: string; header: string; badge: string }
+> = {
+  technical: {
+    label: "Technical",
+    header: "bg-asel-yellow/20",
+    badge: "bg-asel-yellow/20 text-asel-navy border-asel-yellow/30",
+  },
+  digital: {
+    label: "Digital Skills",
+    header: "bg-asel-orange/15",
+    badge: "bg-asel-orange/15 text-asel-orange border-asel-orange/30",
+  },
+  career: {
+    label: "Career Growth",
+    header: "bg-asel-navy/10",
+    badge: "bg-asel-navy/10 text-asel-navy border-asel-navy/15",
+  },
 };
 
-const trackAccent: Record<string, string> = {
-  technical: "border-l-asel-yellow",
-  digital: "border-l-asel-orange",
-  career: "border-l-[#2F80ED]",
-};
+export function ProgramCard({ onOpenDetail, ...program }: ProgramCardProps) {
+  const { track, title, duration, format, summary, isComingSoon } = program;
+  const config = trackConfig[track];
 
-export function ProgramCard({
-  track,
-  title,
-  duration,
-  format,
-  certification,
-  learningPoints,
-  targetAudience,
-  isComingSoon,
-  onEnroll,
-  browseOnly = false,
-}: ProgramCardProps) {
   return (
     <article
-      className={`group flex h-full flex-col rounded-xl border border-asel-navy/10 border-l-4 ${trackAccent[track]} bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg`}
+      onClick={() => onOpenDetail(program)}
+      className="group flex flex-col cursor-pointer rounded-2xl bg-white border border-asel-navy/8 overflow-hidden shadow-sm transition hover:-translate-y-1 hover:shadow-xl focus:outline-none"
+      tabIndex={0}
+      role="button"
+      aria-label={`View details for ${title}`}
+      onKeyDown={(e) => e.key === "Enter" && onOpenDetail(program)}
     >
-      <div className="mb-4 flex items-start justify-between gap-4">
-        <span className="rounded-full bg-asel-off-white px-3 py-1 font-mono text-xs font-medium uppercase tracking-wide text-asel-navy">
-          {trackLabel[track]}
+      {/* Colored track header */}
+      <div className={`relative flex items-end px-6 pb-4 pt-8 ${config.header}`}>
+        <span
+          className={`rounded-full border px-3 py-1 font-mono text-xs font-bold uppercase tracking-wide ${config.badge}`}
+        >
+          {config.label}
         </span>
-        {isComingSoon ? (
-          <span className="rounded-full bg-asel-yellow/15 px-3 py-1 text-xs font-bold text-asel-navy">
+        {isComingSoon && (
+          <span className="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-asel-navy shadow-sm">
             Coming Soon
           </span>
-        ) : null}
-      </div>
-
-      <h3 className="font-display text-xl font-bold text-asel-navy leading-snug">{title}</h3>
-
-      <div className="mt-4 grid gap-2 text-sm text-asel-mid-gray">
-        <span className="flex items-center gap-2">
-          <Clock3 size={15} className="text-asel-orange shrink-0" /> {duration}
-        </span>
-        <span className="flex items-center gap-2">
-          <MapPin size={15} className="text-asel-orange shrink-0" /> {format}
-        </span>
-        <span className="flex items-center gap-2">
-          <GraduationCap size={15} className="text-asel-orange shrink-0" /> {certification}
-        </span>
-      </div>
-
-      <ul className="mt-4 space-y-1.5 text-sm text-asel-navy/80">
-        {learningPoints.map((point) => (
-          <li key={point} className="flex gap-2">
-            <Sparkles size={14} className="mt-0.5 shrink-0 text-asel-yellow" />
-            <span>{point}</span>
-          </li>
-        ))}
-      </ul>
-
-      <p className="mt-4 text-sm font-semibold text-asel-navy">For: {targetAudience}</p>
-
-      <div className="mt-auto pt-5">
-        {browseOnly ? (
-          <Link
-            to="/programs"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-asel-navy/20 px-5 py-2.5 text-sm font-bold text-asel-navy transition hover:border-asel-yellow hover:bg-asel-off-white"
-          >
-            Learn More <ArrowRight size={15} />
-          </Link>
-        ) : (
-          <button
-            onClick={onEnroll}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-asel-yellow px-5 py-2.5 text-sm font-bold text-asel-navy transition hover:bg-asel-yellow/90 hover:-translate-y-0.5"
-          >
-            Enroll <ArrowRight size={15} />
-          </button>
         )}
+      </div>
+
+      {/* Card body */}
+      <div className="flex flex-1 flex-col p-6">
+        <h3 className="font-display text-lg font-bold leading-snug text-asel-navy">
+          {title}
+        </h3>
+        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-asel-mid-gray">
+          {summary}
+        </p>
+
+        {/* Format + duration badges */}
+        <div className="mt-4 flex flex-wrap gap-2">
+          <span className="flex items-center gap-1.5 rounded-full border border-asel-navy/10 bg-asel-off-white px-3 py-1 text-xs font-semibold text-asel-navy">
+            <MapPin size={11} />
+            {format}
+          </span>
+          <span className="flex items-center gap-1.5 rounded-full border border-asel-navy/10 bg-asel-off-white px-3 py-1 text-xs font-semibold text-asel-navy">
+            <Clock3 size={11} />
+            {duration}
+          </span>
+        </div>
+
+        {/* Footer row */}
+        <div className="mt-auto flex items-center justify-end pt-5">
+          <span className="flex items-center gap-1 text-sm font-bold text-asel-navy transition group-hover:text-asel-orange">
+            View Details <ArrowRight size={14} />
+          </span>
+        </div>
       </div>
     </article>
   );

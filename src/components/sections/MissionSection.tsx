@@ -23,22 +23,9 @@ export function MissionSection() {
             academic theory and real field deployment — with a deliberate focus on expanding
             access for women and underrepresented communities.
           </p>
-          <div className="mt-10 grid grid-cols-3 gap-6 border-t border-white/15 pt-10">
-            <MissionStat value="500+" label="Practitioners trained" />
-            <MissionStat value="60%" label="Women enrolled" />
-            <MissionStat value="3" label="Countries reached" />
-          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function MissionStat({ value, label }: { value: string; label: string }) {
-  return (
-    <div>
-      <p className="font-display text-3xl font-extrabold text-asel-yellow">{value}</p>
-      <p className="mt-2 text-sm text-white/70">{label}</p>
-    </div>
-  );
-}
